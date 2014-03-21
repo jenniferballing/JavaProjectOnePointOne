@@ -22,6 +22,8 @@ public class GameLogic extends JFrame implements ActionListener{
     protected ImageBoss boss;
     protected Player p1, p2;
     protected int p1Score, p2Score;
+    protected int p1Wins, p2Wins;
+    protected String temp1, temp2;
 
 
     public GameLogic(){
@@ -321,24 +323,25 @@ public class GameLogic extends JFrame implements ActionListener{
             for(int j=0; j<GridC; j++){
                 if(panelHolder[i][j].getCurrentPic()!=picNum.card && panelHolder[i][j].getCurrentPic()!=picNum.done){//NOT FLIPPED YET
                     if(panelHolder[i][j].getCurrentPic()==picNum.goldMetal||obj.getCurrentPic()==picNum.goldMetal){//GOLD METAL CARD
-                        if(JOptionPane.showConfirmDialog(this, "You picked the gold metal! Congrats! You win! Would you like to play again?")==JOptionPane.OK_OPTION){
+                        if(JOptionPane.showConfirmDialog(this, "The Gold Metal means automatic win! Congrats! Would you like to play again?")==JOptionPane.OK_OPTION){
+                            increaseWinsFunc();
+                            storeWins();
                             GameSetup();
                             ResetFunc();
+                            resetWins();
                         }
                         else{
                             System.exit(0);
                         }
-                        increaseWinsFunc();
-                        GameSetup();
+                        //GameSetup();
                     }
                     else if(panelHolder[i][j].getCurrentPic()==picNum.Fail|| obj.getCurrentPic()==picNum.Fail){
-                        if(JOptionPane.showConfirmDialog(this, "You chose the FAILURE CARD!!! You have lost this game. Would you like to try and redeem yourself?")==JOptionPane.OK_OPTION){
-                            if(p1.Turn)
+                        if(JOptionPane.showConfirmDialog(this, "You chose the FAILURE CARD!!! You lost with one... little... click. Your career is over. Would you like to desperately train for the next Olympics and try to redeem yourself?")==JOptionPane.OK_OPTION){
+                            increaseOtherPlayerWins();
+                            storeWins();
                             GameSetup();
                             ResetFunc();
-                            this.update(this.getGraphics());
-                            this.revalidate();
-                            this.repaint();
+                            resetWins();
                         }
                         else{
                             System.exit(0);
@@ -387,6 +390,8 @@ public class GameLogic extends JFrame implements ActionListener{
                 }
             }
             if(counter>= (GridR*GridC)){
+                increaseWinsFunc();
+                storeWins();
                 winnerMessage();
             }
         }
@@ -440,6 +445,23 @@ public class GameLogic extends JFrame implements ActionListener{
             p2WinsTF.setText(newStr);
         }
     }
+    void increaseOtherPlayerWins(){
+        if(p2.Turn){
+            String str= p1WinsTF.getText();
+            int num= Integer.parseInt(str);
+            num++;
+            String newStr =Integer.toString(num);
+            p1WinsTF.setText(newStr);
+        }
+        else{
+            String str= p2WinsTF.getText();
+            int num= Integer.parseInt(str);
+            num++;
+            String newStr =Integer.toString(num);
+            p2WinsTF.setText(newStr);
+        }
+
+    }
     void increaseScore(Images obj, Images panelHolder){
         if(p1.Turn){
             int score=p1.getScore();
@@ -465,19 +487,11 @@ public class GameLogic extends JFrame implements ActionListener{
         String now;
         if(p1.Score>p2.Score){
             winner=" Player 1 wins!";
-            String str= p1WinsTF.getText();
-            int score= Integer.parseInt(str);
-            score+=1;
-            now =Integer.toString(score);
-            p1WinsTF.setText(now);
+            increaseWinsFunc();
         }
         else if (p1.Score<p2.Score){
             winner= " Player 2 wins!";
-            String str= p2WinsTF.getText();
-            int score= Integer.parseInt(str);
-            score+=1;
-            now =Integer.toString(score);
-            p2WinsTF.setText(now);
+            increaseWinsFunc();
         }
         else{
             winner = " Both Players are winners!";
@@ -485,11 +499,21 @@ public class GameLogic extends JFrame implements ActionListener{
         String output= "Congrats! "+ winner + " Would you like to play again?";
         if(JOptionPane.showConfirmDialog(this, output)==JOptionPane.OK_OPTION){
 
+            storeWins();
             GameSetup();
             ResetFunc();
+            resetWins();
         }
         else{
             System.exit(0);
         }
+    }
+    void storeWins(){
+        temp1= p1WinsTF.getText();
+        temp2=p2WinsTF.getText();
+    }
+    void resetWins(){
+        p1WinsTF.setText(temp1);
+        p2WinsTF.setText(temp2);
     }
 }
