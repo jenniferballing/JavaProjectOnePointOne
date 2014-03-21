@@ -14,6 +14,8 @@ public class ImageBoss {
         imageArr = new ArrayList<ImageIcon>();
         imageArr.add(new ImageIcon(this.getClass().getResource("done.png")));
         imageArr.add(new ImageIcon(this.getClass().getResource("Card.png")));
+        imageArr.add(new ImageIcon(this.getClass().getResource("Fail.png")));
+        imageArr.add(new ImageIcon(this.getClass().getResource("goldMetal.png")));
         imageArr.add(new ImageIcon(this.getClass().getResource("Skater.png")));
         imageArr.add(new ImageIcon(this.getClass().getResource("SnowB.png")));
         imageArr.add(new ImageIcon(this.getClass().getResource("upsideSki.png")));

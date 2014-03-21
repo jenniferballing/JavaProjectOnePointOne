@@ -8,6 +8,7 @@ public class Player {
     int Score;
     int Wins;
     boolean Turn;
+    GameLogic gameBoard;
 
     public Player(String Name, int Score, int Wins, boolean Turn){
         this.Score=Score;

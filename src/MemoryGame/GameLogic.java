@@ -21,6 +21,7 @@ public class GameLogic extends JFrame implements ActionListener{
     protected Images panelHolder[][];
     protected ImageBoss boss;
     protected Player p1, p2;
+    protected int p1Score, p2Score;
 
 
     public GameLogic(){
@@ -28,6 +29,7 @@ public class GameLogic extends JFrame implements ActionListener{
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(700,700);
+        pack();
         setVisible(true);
 
     }
@@ -45,6 +47,8 @@ public class GameLogic extends JFrame implements ActionListener{
         p1MovesTF= new JLabel();
         p2MovesL= new JLabel();
         p2MovesTF= new JLabel();
+        p1Score=0;
+        p2Score=0;
 
         p1= new Player("p1", 0, 0, true);
         p2= new Player("p2", 0, 0, false);
@@ -168,10 +172,10 @@ public class GameLogic extends JFrame implements ActionListener{
         p1WinsL.setText("Player 1 Wins:");
         p1WinsL.setForeground(Color.white);
         p1WinsL.setFont(p1WinsL.getFont().deriveFont(16f));
-        SpaceTF.setText("     ");
+        SpaceTF.setText("       ");
         p1WinsTF.setText("0");
         p1WinsTF.setFont(p1WinsTF.getFont().deriveFont(16f));
-        p1WinsTF.setForeground(Color.darkGray);
+        p1WinsTF.setForeground(Color.white);
 
         p1MovesL.setText("Player 1 Moves:");
         p1MovesL.setFont(p1MovesL.getFont().deriveFont(16f));
@@ -271,48 +275,19 @@ public class GameLogic extends JFrame implements ActionListener{
 
     //OK BUTTON LISTENER
     public void TwelveButtonListener (ActionEvent e){
-        GridR=4;
-        GridC=3;
-
-        panelHolder = new Images[GridR][GridC];
-        boss = new ImageBoss();
-        for(int i=0; i<(GridR); i++){
-            for(int j=0; j<(GridC); j++){
-                panelHolder[i][j]=new Images(1, boss, this);
-                GridP.add(panelHolder[i][j]);
-            }
-        }
-        GameSetup();
-        update(this.getGraphics());
+        GridR=3;
+        GridC=4;
+        cardValue();
     }
-
     public void SixteenButtonListener (ActionEvent e){
         GridR=4;
         GridC=4;
-        panelHolder = new Images[GridR][GridC];
-        boss = new ImageBoss();
-        for(int i=0; i<(GridR); i++){
-            for(int j=0; j<(GridC); j++){
-                panelHolder[i][j]=new Images(1, boss, this);
-                GridP.add(panelHolder[i][j]);
-            }
-        }
-        GameSetup();
-        update(this.getGraphics());
+        cardValue();
     }
     public void TwentyButtonListener (ActionEvent e){
         GridR=5;
         GridC=4;
-        panelHolder = new Images[GridR][GridC];
-        boss = new ImageBoss();
-        for(int i=0; i<(GridR); i++){
-            for(int j=0; j<(GridC); j++){
-                panelHolder[i][j]=new Images(1, boss, this);
-                GridP.add(panelHolder[i][j]);
-            }
-        }
-        GameSetup();
-        update(this.getGraphics());
+        cardValue();
     }
 
     //YES BUTTON HANDLER
@@ -341,10 +316,35 @@ public class GameLogic extends JFrame implements ActionListener{
 
     }
     void CheckMatch(Images obj){
+        increaseMovesFunc();
         for(int i=0; i<GridR; i++){
             for(int j=0; j<GridC; j++){
-                if(panelHolder[i][j].getCurrentPic()!=picNum.card && panelHolder[i][j].getCurrentPic()!=picNum.done){
-                    if(obj!=panelHolder[i][j]){
+                if(panelHolder[i][j].getCurrentPic()!=picNum.card && panelHolder[i][j].getCurrentPic()!=picNum.done){//NOT FLIPPED YET
+                    if(panelHolder[i][j].getCurrentPic()==picNum.goldMetal||obj.getCurrentPic()==picNum.goldMetal){//GOLD METAL CARD
+                        if(JOptionPane.showConfirmDialog(this, "You picked the gold metal! Congrats! You win! Would you like to play again?")==JOptionPane.OK_OPTION){
+                            GameSetup();
+                            ResetFunc();
+                        }
+                        else{
+                            System.exit(0);
+                        }
+                        increaseWinsFunc();
+                        GameSetup();
+                    }
+                    else if(panelHolder[i][j].getCurrentPic()==picNum.Fail|| obj.getCurrentPic()==picNum.Fail){
+                        if(JOptionPane.showConfirmDialog(this, "You chose the FAILURE CARD!!! You have lost this game. Would you like to try and redeem yourself?")==JOptionPane.OK_OPTION){
+                            if(p1.Turn)
+                            GameSetup();
+                            ResetFunc();
+                            this.update(this.getGraphics());
+                            this.revalidate();
+                            this.repaint();
+                        }
+                        else{
+                            System.exit(0);
+                        }
+                    }
+                    else if(obj!=panelHolder[i][j]){
                         if(obj.getCurrentPic()==panelHolder[i][j].getCurrentPic()){
                             if(panelHolder[i][j].PointValue==3){
                                 JOptionPane.showMessageDialog(this, "You got a match that is worth 3 points. Congrats!");
@@ -352,24 +352,7 @@ public class GameLogic extends JFrame implements ActionListener{
                             else{
                             JOptionPane.showMessageDialog(this,"You got a match! It is your turn again.");
                             }
-                            if(p1.Turn){
-                                int score=p1.getScore();
-                                score+=panelHolder[i][j].PointValue;
-                                p1.setScore(score);
-                                String scoreShow= Integer.toString(score);
-                                Player1TF.setText(scoreShow);
-                                panelHolder[i][j].setCurrentPic(picNum.done);
-                                obj.setCurrentPic(picNum.done);
-                            }
-                            else{
-                                int score=p2.getScore();
-                                score+=panelHolder[i][j].PointValue;
-                                p2.setScore(score);
-                                String scoreShow= Integer.toString(score);
-                                Player2TF.setText(scoreShow);
-                                panelHolder[i][j].setCurrentPic(picNum.done);
-                                obj.setCurrentPic(picNum.done);
-                            }
+                            increaseScore(obj, panelHolder[i][j]);
                             WinCheck();
                         }
                         else{
@@ -390,6 +373,7 @@ public class GameLogic extends JFrame implements ActionListener{
                 }
             }
         }
+
         update(this.getGraphics());
         revalidate();
         repaint();
@@ -403,36 +387,109 @@ public class GameLogic extends JFrame implements ActionListener{
                 }
             }
             if(counter>= (GridR*GridC)){
-                String winner, now1="", now2="";
-                if(p1.Score>p2.Score){
-                    winner=" Player 1 wins!";
-                    String str= p1WinsTF.getText();
-                    int score= Integer.parseInt(str);
-                    score+=1;
-                    now1 =Integer.toString(score);
-                    p1WinsTF.setText(now1);
-                }
-                else if (p1.Score<p2.Score){
-                    winner= " Player 2 wins!";
-                    String str= p1WinsTF.getText();
-                    int score= Integer.parseInt(str);
-                    score+=1;
-                    now2 =Integer.toString(score);
-                    p1WinsTF.setText(now2);
+                winnerMessage();
+            }
+        }
+    }
+    public void cardValue(){
+        boss = new ImageBoss();
+        panelHolder=new Images[GridR][GridC];
+        for(int i=0; i<(GridR); i++){
+            for(int j=0; j<(GridC); j++){
+                if (j==2){
+                    panelHolder[i][j]=new Images(3, boss, this);
                 }
                 else{
-                    winner = " Both Players are winners!";
+                    panelHolder[i][j]=new Images(1, boss, this);
                 }
-                String output= "Congrats! "+ winner + " Would you like to play again?";
-                if(JOptionPane.showConfirmDialog(this, output)==JOptionPane.OK_OPTION){
-
-                    GameSetup();
-                    ResetFunc();
-                    p1WinsTF.setText(now1);
-                    p2WinsTF.setText(now2);
-
-                }
+                GridP.add(panelHolder[i][j]);
             }
+        }
+        GameSetup();
+        update(this.getGraphics());
+    }
+    void increaseMovesFunc(){
+        if(p1.Turn){
+            String str= p1MovesTF.getText();
+            int num= Integer.parseInt(str);
+            num++;
+            String newStr =Integer.toString(num);
+            p1MovesTF.setText(newStr);
+        }
+        else{
+            String str= p2MovesTF.getText();
+            int num= Integer.parseInt(str);
+            num++;
+            String newStr =Integer.toString(num);
+            p2MovesTF.setText(newStr);
+        }
+    }
+    void increaseWinsFunc(){
+        if(p1.Turn){
+            String str= p1WinsTF.getText();
+            int num= Integer.parseInt(str);
+            num++;
+            String newStr =Integer.toString(num);
+            p1WinsTF.setText(newStr);
+        }
+        else{
+            String str= p2WinsTF.getText();
+            int num= Integer.parseInt(str);
+            num++;
+            String newStr =Integer.toString(num);
+            p2WinsTF.setText(newStr);
+        }
+    }
+    void increaseScore(Images obj, Images panelHolder){
+        if(p1.Turn){
+            int score=p1.getScore();
+            score+=panelHolder.PointValue;
+            p1.setScore(score);
+            String scoreShow= Integer.toString(score);
+            Player1TF.setText(scoreShow);
+            panelHolder.setCurrentPic(picNum.done);
+            obj.setCurrentPic(picNum.done);
+        }
+        else{
+            int score=p2.getScore();
+            score+=panelHolder.PointValue;
+            p2.setScore(score);
+            String scoreShow= Integer.toString(score);
+            Player2TF.setText(scoreShow);
+            panelHolder.setCurrentPic(picNum.done);
+            obj.setCurrentPic(picNum.done);
+        }
+    }
+    void winnerMessage(){
+        String winner;
+        String now;
+        if(p1.Score>p2.Score){
+            winner=" Player 1 wins!";
+            String str= p1WinsTF.getText();
+            int score= Integer.parseInt(str);
+            score+=1;
+            now =Integer.toString(score);
+            p1WinsTF.setText(now);
+        }
+        else if (p1.Score<p2.Score){
+            winner= " Player 2 wins!";
+            String str= p2WinsTF.getText();
+            int score= Integer.parseInt(str);
+            score+=1;
+            now =Integer.toString(score);
+            p2WinsTF.setText(now);
+        }
+        else{
+            winner = " Both Players are winners!";
+        }
+        String output= "Congrats! "+ winner + " Would you like to play again?";
+        if(JOptionPane.showConfirmDialog(this, output)==JOptionPane.OK_OPTION){
+
+            GameSetup();
+            ResetFunc();
+        }
+        else{
+            System.exit(0);
         }
     }
 }

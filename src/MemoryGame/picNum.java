@@ -6,6 +6,8 @@ package MemoryGame;
 public enum picNum {
     done(),
     card(),
+    Fail(),
+    goldMetal(),
     Skater(),
     SnowB(),
     upsideSki(),
