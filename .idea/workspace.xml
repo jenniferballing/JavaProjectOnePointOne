@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="267a71e1-e124-433f-8098-63387ae598b8" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MemoryGame/GameLogic.java" afterPath="$PROJECT_DIR$/src/MemoryGame/GameLogic.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MemoryGame/Main.java" afterPath="$PROJECT_DIR$/src/MemoryGame/Main.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="JavaProjectOnePointOne.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -57,23 +59,6 @@
       </breakpoint>
     </breakpoint_any>
     <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
-    <line_breakpoints>
-      <breakpoint url="file://$PROJECT_DIR$/src/MemoryGame/GameLogic.java" line="501" class="MemoryGame.GameLogic" package="MemoryGame">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-    </line_breakpoints>
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -86,7 +71,7 @@
       <file leaf-file-name="Main.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MemoryGame/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="28" selection-start="473" selection-end="473" vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="544">
+            <state line="11" column="67" selection-start="259" selection-end="259" vertical-scroll-proportion="0.0" vertical-offset="25" max-vertical-offset="561">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -127,35 +112,20 @@
       <file leaf-file-name="GameLogic.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/MemoryGame/GameLogic.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="338" column="215" selection-start="11813" selection-end="11813" vertical-scroll-proportion="0.65501165" vertical-offset="994" max-vertical-offset="2839">
+            <state line="374" column="45" selection-start="13312" selection-end="13312" vertical-scroll-proportion="0.5603448" vertical-offset="6098" max-vertical-offset="10914">
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#InitSetup#0;class#GameLogic#0" expanded="false" />
-                <element signature="e#3254#3418#0" expanded="true" />
-                <element signature="e#3409#3410#0" expanded="true" />
-                <element signature="e#3493#3660#0" expanded="true" />
-                <element signature="e#3649#3650#0" expanded="true" />
-                <element signature="e#3733#3899#0" expanded="true" />
-                <element signature="e#3888#3889#0" expanded="true" />
-                <element signature="e#4103#4266#0" expanded="true" />
-                <element signature="e#4255#4256#0" expanded="true" />
-                <element signature="e#4332#4494#0" expanded="true" />
-                <element signature="e#4483#4484#0" expanded="true" />
-                <element signature="method#GameSetup#0;class#GameLogic#0" expanded="false" />
-                <element signature="method#ResetFunc#0;class#GameLogic#0" expanded="false" />
-                <element signature="method#PlaceCards#0;class#GameLogic#0" expanded="false" />
-                <element signature="e#8983#8991#0" expanded="true" />
-                <element signature="method#TwelveButtonListener#0;class#GameLogic#0" expanded="false" />
-                <element signature="method#SixteenButtonListener#0;class#GameLogic#0" expanded="false" />
-                <element signature="method#TwentyButtonListener#0;class#GameLogic#0" expanded="false" />
-                <element signature="method#YesButtonListener#0;class#GameLogic#0" expanded="false" />
-                <element signature="method#NoButtonListener#0;class#GameLogic#0" expanded="false" />
-                <element signature="method#WinCheck#0;class#GameLogic#0" expanded="false" />
-                <element signature="method#cardValue#0;class#GameLogic#0" expanded="false" />
-                <element signature="method#increaseMovesFunc#0;class#GameLogic#0" expanded="false" />
-                <element signature="method#increaseWinsFunc#0;class#GameLogic#0" expanded="false" />
-                <element signature="method#increaseOtherPlayerWins#0;class#GameLogic#0" expanded="false" />
-                <element signature="method#increaseScore#0;class#GameLogic#0" expanded="false" />
+                <element signature="e#3542#3706#0" expanded="true" />
+                <element signature="e#3697#3698#0" expanded="true" />
+                <element signature="e#3781#3948#0" expanded="true" />
+                <element signature="e#3937#3938#0" expanded="true" />
+                <element signature="e#4021#4187#0" expanded="true" />
+                <element signature="e#4176#4177#0" expanded="true" />
+                <element signature="e#4391#4554#0" expanded="true" />
+                <element signature="e#4543#4544#0" expanded="true" />
+                <element signature="e#4620#4782#0" expanded="true" />
+                <element signature="e#4771#4772#0" expanded="true" />
+                <element signature="e#9271#9279#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -482,7 +452,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -491,7 +461,7 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12520325" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.43739837" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -502,7 +472,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.04003021" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19674797" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18211383" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -607,7 +577,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MemoryGame/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="28" selection-start="473" selection-end="473" vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="544">
+        <state line="11" column="67" selection-start="259" selection-end="259" vertical-scroll-proportion="0.0" vertical-offset="25" max-vertical-offset="561">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -616,35 +586,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MemoryGame/GameLogic.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="338" column="215" selection-start="11813" selection-end="11813" vertical-scroll-proportion="0.65501165" vertical-offset="994" max-vertical-offset="2839">
+        <state line="374" column="45" selection-start="13312" selection-end="13312" vertical-scroll-proportion="0.5603448" vertical-offset="6098" max-vertical-offset="10914">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#InitSetup#0;class#GameLogic#0" expanded="false" />
-            <element signature="e#3254#3418#0" expanded="true" />
-            <element signature="e#3409#3410#0" expanded="true" />
-            <element signature="e#3493#3660#0" expanded="true" />
-            <element signature="e#3649#3650#0" expanded="true" />
-            <element signature="e#3733#3899#0" expanded="true" />
-            <element signature="e#3888#3889#0" expanded="true" />
-            <element signature="e#4103#4266#0" expanded="true" />
-            <element signature="e#4255#4256#0" expanded="true" />
-            <element signature="e#4332#4494#0" expanded="true" />
-            <element signature="e#4483#4484#0" expanded="true" />
-            <element signature="method#GameSetup#0;class#GameLogic#0" expanded="false" />
-            <element signature="method#ResetFunc#0;class#GameLogic#0" expanded="false" />
-            <element signature="method#PlaceCards#0;class#GameLogic#0" expanded="false" />
-            <element signature="e#8983#8991#0" expanded="true" />
-            <element signature="method#TwelveButtonListener#0;class#GameLogic#0" expanded="false" />
-            <element signature="method#SixteenButtonListener#0;class#GameLogic#0" expanded="false" />
-            <element signature="method#TwentyButtonListener#0;class#GameLogic#0" expanded="false" />
-            <element signature="method#YesButtonListener#0;class#GameLogic#0" expanded="false" />
-            <element signature="method#NoButtonListener#0;class#GameLogic#0" expanded="false" />
-            <element signature="method#WinCheck#0;class#GameLogic#0" expanded="false" />
-            <element signature="method#cardValue#0;class#GameLogic#0" expanded="false" />
-            <element signature="method#increaseMovesFunc#0;class#GameLogic#0" expanded="false" />
-            <element signature="method#increaseWinsFunc#0;class#GameLogic#0" expanded="false" />
-            <element signature="method#increaseOtherPlayerWins#0;class#GameLogic#0" expanded="false" />
-            <element signature="method#increaseScore#0;class#GameLogic#0" expanded="false" />
+            <element signature="e#3542#3706#0" expanded="true" />
+            <element signature="e#3697#3698#0" expanded="true" />
+            <element signature="e#3781#3948#0" expanded="true" />
+            <element signature="e#3937#3938#0" expanded="true" />
+            <element signature="e#4021#4187#0" expanded="true" />
+            <element signature="e#4176#4177#0" expanded="true" />
+            <element signature="e#4391#4554#0" expanded="true" />
+            <element signature="e#4543#4544#0" expanded="true" />
+            <element signature="e#4620#4782#0" expanded="true" />
+            <element signature="e#4771#4772#0" expanded="true" />
+            <element signature="e#9271#9279#0" expanded="true" />
           </folding>
         </state>
       </provider>

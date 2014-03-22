@@ -1,11 +1,19 @@
 package MemoryGame;
 
+import com.sun.org.apache.xerces.internal.util.URI;
 import sun.management.resources.agent;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -24,6 +32,7 @@ public class GameLogic extends JFrame implements ActionListener{
     protected int p1Score, p2Score;
     protected int p1Wins, p2Wins;
     protected String temp1, temp2;
+    int matchCount=0;
 
 
     public GameLogic(){
@@ -261,7 +270,9 @@ public class GameLogic extends JFrame implements ActionListener{
     void PlaceCards(){
         ArrayList<picNum> picArr= new ArrayList<picNum>();
         int count=0;
-        for(int l=2; l<(GridC*GridR)/2+2; l++){
+        picArr.add(picNum.values()[2]);
+        picArr.add(picNum.values()[3]);
+        for(int l=4; l<(GridC*GridR)/2+3; l++){
             picArr.add(picNum.values()[l]);
             picArr.add(picNum.values()[l]);
         }
@@ -271,6 +282,7 @@ public class GameLogic extends JFrame implements ActionListener{
             for(int j=0; j<GridC; j++){
                 panelHolder[i][j].setSport(picArr.get(count));
                 count++;
+
             }
         }
     }
@@ -318,12 +330,14 @@ public class GameLogic extends JFrame implements ActionListener{
 
     }
     void CheckMatch(Images obj){
+
         increaseMovesFunc();
         for(int i=0; i<GridR; i++){
             for(int j=0; j<GridC; j++){
                 if(panelHolder[i][j].getCurrentPic()!=picNum.card && panelHolder[i][j].getCurrentPic()!=picNum.done){//NOT FLIPPED YET
                     if(panelHolder[i][j].getCurrentPic()==picNum.goldMetal||obj.getCurrentPic()==picNum.goldMetal){//GOLD METAL CARD
-                        if(JOptionPane.showConfirmDialog(this, "The Gold Metal means automatic win! Congrats! Would you like to play again?")==JOptionPane.OK_OPTION){
+                        WinGif();
+                        if(JOptionPane.showConfirmDialog(this, "Would you like to play again?")==JOptionPane.OK_OPTION){
                             increaseWinsFunc();
                             storeWins();
                             GameSetup();
@@ -333,33 +347,43 @@ public class GameLogic extends JFrame implements ActionListener{
                         else{
                             System.exit(0);
                         }
-                        //GameSetup();
                     }
                     else if(panelHolder[i][j].getCurrentPic()==picNum.Fail|| obj.getCurrentPic()==picNum.Fail){
-                        if(JOptionPane.showConfirmDialog(this, "You chose the FAILURE CARD!!! You lost with one... little... click. Your career is over. Would you like to desperately train for the next Olympics and try to redeem yourself?")==JOptionPane.OK_OPTION){
-                            increaseOtherPlayerWins();
+                         failGif();
+                         increaseOtherPlayerWins();
                             storeWins();
                             GameSetup();
                             ResetFunc();
                             resetWins();
                         }
-                        else{
-                            System.exit(0);
-                        }
-                    }
                     else if(obj!=panelHolder[i][j]){
                         if(obj.getCurrentPic()==panelHolder[i][j].getCurrentPic()){
-                            if(panelHolder[i][j].PointValue==3){
+                            if(matchCount>0){
+                                JOptionPane.showMessageDialog(this, "You got another match. You get a bonus point and another turn");
+                                matchCount++;
+                                bonusPoint();
+                                if((panelHolder[i][j].PointValue==3)){
+                                    JOptionPane.showMessageDialog(this, "Congrats, another match! This one is worth three points and you get a bonus point.");
+                                    matchCount++;
+                                }
+                            }
+                            else if(panelHolder[i][j].PointValue==3){
                                 JOptionPane.showMessageDialog(this, "You got a match that is worth 3 points. Congrats!");
+                                matchCount++;
                             }
-                            else{
-                            JOptionPane.showMessageDialog(this,"You got a match! It is your turn again.");
+                            else if(matchCount<1){
+                                MatchGif();//JOptionPane.showMessageDialog(this,"You got a match! It is your turn again.");
+                                matchCount++;
                             }
+
                             increaseScore(obj, panelHolder[i][j]);
                             WinCheck();
                         }
                         else{
+
+                            //JOptionPane.showMessageDialog(null, "Other player's turn...","Not A Match", JOptionPane.OK_OPTION, OlympicRings);//gif
                             JOptionPane.showMessageDialog(this, "Not a match. Other player's turn...");
+                            matchCount=0;
                             obj.setCurrentPic(picNum.card);
                             panelHolder[i][j].setCurrentPic(picNum.card);
                             p1.switchTurns(p2);
@@ -376,7 +400,6 @@ public class GameLogic extends JFrame implements ActionListener{
                 }
             }
         }
-
         update(this.getGraphics());
         revalidate();
         repaint();
@@ -515,5 +538,99 @@ public class GameLogic extends JFrame implements ActionListener{
     void resetWins(){
         p1WinsTF.setText(temp1);
         p2WinsTF.setText(temp2);
+    }
+    void bonusPoint(){
+        if(p1.Turn){
+            int score=p1.getScore();
+            score+=1;
+            p1.setScore(score);
+            String scoreShow= Integer.toString(score);
+            Player1TF.setText(scoreShow);
+        }
+        else{
+            int score=p2.getScore();
+            score+=1;
+            p2.setScore(score);
+            String scoreShow= Integer.toString(score);
+            Player2TF.setText(scoreShow);
+        }
+    }
+    void failGif(){
+        URL image;
+        try{
+            final ImageIcon icon = new ImageIcon(new URL("http://25.media.tumblr.com/311dce708db1e7520a13a538076c4495/tumblr_n1em70ptR71sa8164o1_400.gif"));
+            JOptionPane.showMessageDialog(null, "You chose the FAILURE CARD!!! You lost with one... little... click. \nYour career is over. \n(Or you can desperately train for four years in an attempt to redeem yourself...)", "Failure IS an option... for you!", JOptionPane.INFORMATION_MESSAGE, icon);
+            image = new URL ("http://25.media.tumblr.com/311dce708db1e7520a13a538076c4495/tumblr_n1em70ptR71sa8164o1_400.gif");
+
+            URLConnection connect = new URLConnection(image) {
+                @Override
+                public void connect() throws IOException {
+
+                }
+            };
+            try{
+                InputStream in = connect.getInputStream();
+
+            }
+            catch(IOException e){
+                e.getLocalizedMessage();
+            }
+
+        }
+        catch (MalformedURLException e){
+            e.printStackTrace();
+        }
+    }
+    void WinGif(){
+        URL image;
+        try{
+            final ImageIcon icon = new ImageIcon(new URL("http://25.media.tumblr.com/7de508f6800048ae7f5497d719e2a6bf/tumblr_n1i5ijSexP1qdlh1io1_r1_400.gif"));
+            JOptionPane.showMessageDialog(null, "You got the gold metal! \nYOU WIN!", "CONGRATULATIONS!!!", JOptionPane.INFORMATION_MESSAGE, icon);
+            image = new URL ("http://25.media.tumblr.com/7de508f6800048ae7f5497d719e2a6bf/tumblr_n1i5ijSexP1qdlh1io1_r1_400.gif");
+
+            URLConnection connect = new URLConnection(image) {
+                @Override
+                public void connect() throws IOException {
+
+                }
+            };
+            try{
+                InputStream in = connect.getInputStream();
+
+            }
+            catch(IOException e){
+                e.getLocalizedMessage();
+            }
+
+        }
+        catch (MalformedURLException e){
+            e.printStackTrace();
+        }
+    }
+    void MatchGif(){
+        URL image;
+        try{
+            final ImageIcon icon = new ImageIcon(new URL("http://pixel.nymag.com/imgs/daily/intelligencer/2014/02/15/Olympics%202/celebration.o.jpg/a_560x375.jpg"));
+            JOptionPane.showMessageDialog(null, "You got a match! Its your turn again.", "Congrats!!!", JOptionPane.INFORMATION_MESSAGE, icon);
+            image = new URL ("http://pixel.nymag.com/imgs/daily/intelligencer/2014/02/15/Olympics%202/celebration.o.jpg/a_560x375.jpg");
+
+            URLConnection connect = new URLConnection(image) {
+                @Override
+                public void connect() throws IOException {
+
+                }
+            };
+            try{
+                InputStream in = connect.getInputStream();
+
+            }
+            catch(IOException e){
+                e.getLocalizedMessage();
+            }
+
+        }
+        catch (MalformedURLException e){
+            e.printStackTrace();
+        }
     }
 }

@@ -8,10 +8,11 @@ import java.awt.event.ActionEvent;
  * Created by JenniferBalling on 3/19/14.
  */
 
-// MOVES NOT CHANGING - MATCHFUNC-GAMELOGIC
-// P1WINSTF NOT SHOWING - GAMESETUP()
-// DOESN't ASSIGN CORRECT POINTS - CARDVALUE - MATCHFUNC
-// FAIL OR GOLD AT ANY TIME
+//Not using the bonus point menu very well
+//could store wins in file with real names/ gif in joption pane....
+//try-catch blocks
+//About button
+//README file
 public class Main {
 
     public static void main(String [] args){
