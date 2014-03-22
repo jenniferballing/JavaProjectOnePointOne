@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -20,7 +21,7 @@ public class GameLogic extends JFrame implements ActionListener{
     protected JPanel ContainerP, MovesP, TitleP, GridP, ScoreP, ImageP, QuestionP, ButtonP, BonusP, WinsP;
     protected JLabel Title, Rings, QuestionTF, p1WinsL, p2WinsL, p1WinsTF, p2WinsTF, SpaceTF, Player1L, Player2L, Player1TF, Player2TF, p2MovesL, p2MovesTF, p1MovesL, p1MovesTF;
     protected ImageIcon OlympicRings;
-    protected JButton TwelveB, SixteenB, TwentyB, YesB, NoB;
+    protected JButton TwelveB, SixteenB, TwentyB, YesB, NoB, AboutB;
     protected int GridR, GridC;
     protected Images panelHolder[][];
     protected ImageBoss boss;
@@ -54,6 +55,7 @@ public class GameLogic extends JFrame implements ActionListener{
         p1MovesTF= new JLabel();
         p2MovesL= new JLabel();
         p2MovesTF= new JLabel();
+        AboutB= new JButton("ABOUT");
         p1Score=0;
         p2Score=0;
 
@@ -138,6 +140,12 @@ public class GameLogic extends JFrame implements ActionListener{
         });
         ButtonP.add(YesB);
         ButtonP.add(NoB);
+        AboutB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AboutButtonListener(e);
+            }
+        });
 
         //BONUS PANEL
         BonusP = new JPanel();
@@ -181,13 +189,13 @@ public class GameLogic extends JFrame implements ActionListener{
         p1WinsL.setForeground(Color.white);
         p1WinsL.setFont(p1WinsL.getFont().deriveFont(16f));
 
-        SpaceTF.setText("       ");
+        SpaceTF.setText("      ");
 
         p1WinsTF.setText("0");
         p1WinsTF.setFont(p1WinsTF.getFont().deriveFont(16f));
         p1WinsTF.setForeground(Color.white);
 
-        p2WinsL.setText("Player 2 Wins:");
+        p2WinsL.setText("      Player 2 Wins:");
         p2WinsL.setForeground(Color.white);
         p2WinsL.setFont(p2WinsL.getFont().deriveFont(16f));
 
@@ -195,14 +203,22 @@ public class GameLogic extends JFrame implements ActionListener{
         p2WinsTF.setFont(p2WinsTF.getFont().deriveFont(16f));
         p2WinsTF.setForeground(Color.white);
 
+        AboutB.setBackground(Color.white);
+        AboutB.setForeground(Color.darkGray);
+        AboutB.setLayout(new FlowLayout(FlowLayout.RIGHT));
+
+        JLabel space= new JLabel("           ");
+
         WinsP.setBackground(Color.darkGray);
         WinsP.setPreferredSize(new Dimension(600, 40));
         WinsP.setLayout(new FlowLayout(FlowLayout.CENTER));
         WinsP.add(p1WinsL);
         WinsP.add(p1WinsTF);
-        WinsP.add(SpaceTF);
+        WinsP.add(space);
         WinsP.add(p2WinsL);
         WinsP.add(p2WinsTF);
+        WinsP.add(space);
+        WinsP.add(AboutB);
 
         //MOVES PANEL
         p1MovesL.setText("Player 1 Moves:");
@@ -279,7 +295,7 @@ public class GameLogic extends JFrame implements ActionListener{
 
         picArr.add(picNum.values()[2]);
         picArr.add(picNum.values()[3]);
-        for(int l=4; l<(GridC*GridR)/2+5; l++){
+        for(int l=4; l<(GridC*GridR)/2+3; l++){
             picArr.add(picNum.values()[l]);
             picArr.add(picNum.values()[l]);
         }
@@ -308,6 +324,9 @@ public class GameLogic extends JFrame implements ActionListener{
         GridR=5;
         GridC=4;
         cardValue();
+    }
+    public void AboutButtonListener (ActionEvent e){
+        AboutPic();
     }
 
     //YES BUTTON HANDLER
@@ -377,21 +396,28 @@ public class GameLogic extends JFrame implements ActionListener{
                                     ThreePointMatchGif();
                                     matchCount++;
                                 }
+                                if(panelHolder[i][j].PointValue==2){
+                                    TwoPointMatchGif();
+                                    matchCount++;
+                                }
                             }
                             else if(panelHolder[i][j].PointValue==3){
                                 ThreePointMatchGif();
+                                matchCount++;
+                            }
+                            else if (panelHolder[i][j].PointValue==2){
+                                TwoPointMatchGif();
                                 matchCount++;
                             }
                             else if(matchCount<1){
                                 MatchGif();
                                 matchCount++;
                             }
-
                             increaseScore(obj, panelHolder[i][j]);
                             WinCheck();
                         }
                         else{
-                            JOptionPane.showMessageDialog(this, "Not a match. Other player's turn...");
+                            NotAMatchGif();
                             matchCount=0;
 
                             obj.setCurrentPic(picNum.card);
@@ -438,6 +464,9 @@ public class GameLogic extends JFrame implements ActionListener{
             for(int j=0; j<(GridC); j++){
                 if (j==2){
                     panelHolder[i][j]=new Images(3, boss, this);
+                }
+                else if(j==1){
+                    panelHolder[i][j]=new Images(2, boss, this);
                 }
                 else{
                     panelHolder[i][j]=new Images(1, boss, this);
@@ -649,9 +678,35 @@ public class GameLogic extends JFrame implements ActionListener{
     void ThreePointMatchGif(){
         URL image;
         try{
-            final ImageIcon icon = new ImageIcon(new URL("http://pixel.nymag.com/imgs/daily/intelligencer/2014/02/15/Olympics%202/celebration.o.jpg/a_560x375.jpg"));
+            final ImageIcon icon = new ImageIcon(new URL("http://pixel.nymag.com/imgs/daily/intelligencer/2014/02/15/Olympics%202/oshie-winner.o.jpg/a_560x375.jpg"));
             JOptionPane.showMessageDialog(null, "You got a match worth 3 points! Its your turn again.", "Congrats!!!", JOptionPane.INFORMATION_MESSAGE, icon);
-            image = new URL ("http://pixel.nymag.com/imgs/daily/intelligencer/2014/02/15/Olympics%202/celebration.o.jpg/a_560x375.jpg");
+            image = new URL ("http://pixel.nymag.com/imgs/daily/intelligencer/2014/02/15/Olympics%202/oshie-winner.o.jpg/a_560x375.jpg");
+
+            URLConnection connect = new URLConnection(image) {
+                @Override
+                public void connect() throws IOException {
+
+                }
+            };
+            try{
+                InputStream in = connect.getInputStream();
+
+            }
+            catch(IOException e){
+                e.getLocalizedMessage();
+            }
+
+        }
+        catch (MalformedURLException e){
+            e.printStackTrace();
+        }
+    }
+    void TwoPointMatchGif(){
+        URL image;
+        try{
+            final ImageIcon icon = new ImageIcon(new URL("http://pixel.nymag.com/imgs/daily/intelligencer/2014/02/15/Olympics%202/oshie-winner.o.jpg/a_560x375.jpg"));
+            JOptionPane.showMessageDialog(null, "You got a match worth 2 points! Its your turn again.", "Congrats!!!", JOptionPane.INFORMATION_MESSAGE, icon);
+            image = new URL ("http://pixel.nymag.com/imgs/daily/intelligencer/2014/02/15/Olympics%202/oshie-winner.o.jpg/a_560x375.jpg");
 
             URLConnection connect = new URLConnection(image) {
                 @Override
@@ -697,5 +752,35 @@ public class GameLogic extends JFrame implements ActionListener{
         catch (MalformedURLException e){
             e.printStackTrace();
         }
+    }
+    void NotAMatchGif(){
+        URL image;
+        try{
+            final ImageIcon icon = new ImageIcon(new URL("http://pixel.nymag.com/imgs/daily/intelligencer/2014/02/15/Olympics%202/expression.o.jpg/a_560x375.jpg"));
+            JOptionPane.showMessageDialog(null, "Not a match.\nOther Player's turn.", "Oops...", JOptionPane.INFORMATION_MESSAGE, icon);
+            image = new URL ("");
+
+            URLConnection connect = new URLConnection(image) {
+                @Override
+                public void connect() throws IOException {
+
+                }
+            };
+            try{
+                InputStream in = connect.getInputStream();
+
+            }
+            catch(IOException e){
+                e.getLocalizedMessage();
+            }
+
+        }
+        catch (MalformedURLException e){
+            e.printStackTrace();
+        }
+    }
+    void AboutPic(){
+        final ImageIcon icon = new ImageIcon(this.getClass().getResource("AboutPic.png"));
+        JOptionPane.showMessageDialog(this, "My Info: \nJennifer Balling \nA00890700", "ABOUT", JOptionPane.INFORMATION_MESSAGE, icon);
     }
 }

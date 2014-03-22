@@ -26,6 +26,7 @@ public class ImageBoss {
         imageArr.add(new ImageIcon(this.getClass().getResource("Biathlon.png")));
         imageArr.add(new ImageIcon(this.getClass().getResource("Skeleton.png")));
         imageArr.add(new ImageIcon(this.getClass().getResource("XCountry.png")));
+        imageArr.add(new ImageIcon(this.getClass().getResource("AboutPic.png")));
     }
     public ImageIcon getImage (picNum index){
         return imageArr.get(index.ordinal());

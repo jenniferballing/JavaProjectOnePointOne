@@ -26,7 +26,6 @@ public class Images extends JPanel implements MouseListener{
         currentPic= picNum.card;
         label.setIcon(pics.getImage(currentPic));
         label.addMouseListener(this);
-
     }
     @Override
     public void mouseClicked(MouseEvent e) {

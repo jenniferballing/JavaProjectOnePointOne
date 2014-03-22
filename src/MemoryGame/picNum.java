@@ -17,6 +17,7 @@ public enum picNum {
     BobSled(),
     Biathlon(),
     Skeleton(),
-    XCountry();
+    XCountry(),
+    AboutPic();
     picNum(){}
 }
