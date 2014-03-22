@@ -1,14 +1,9 @@
 package MemoryGame;
 
-import com.sun.org.apache.xerces.internal.util.URI;
-import sun.management.resources.agent;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -21,6 +16,7 @@ import java.util.Collections;
  * Created by JenniferBalling on 3/19/14.
  */
 public class GameLogic extends JFrame implements ActionListener{
+
     protected JPanel ContainerP, MovesP, TitleP, GridP, ScoreP, ImageP, QuestionP, ButtonP, BonusP, WinsP;
     protected JLabel Title, Rings, QuestionTF, p1WinsL, p2WinsL, p1WinsTF, p2WinsTF, SpaceTF, Player1L, Player2L, Player1TF, Player2TF, p2MovesL, p2MovesTF, p1MovesL, p1MovesTF;
     protected ImageIcon OlympicRings;
@@ -29,10 +25,8 @@ public class GameLogic extends JFrame implements ActionListener{
     protected Images panelHolder[][];
     protected ImageBoss boss;
     protected Player p1, p2;
-    protected int p1Score, p2Score;
-    protected int p1Wins, p2Wins;
+    protected int p1Score, p2Score, matchCount=0;
     protected String temp1, temp2;
-    int matchCount=0;
 
 
     public GameLogic(){
@@ -45,6 +39,8 @@ public class GameLogic extends JFrame implements ActionListener{
 
     }
     void InitSetup(){
+
+        //INITIALIZATIONS
 
         GridP= new JPanel();
         WinsP= new JPanel();
@@ -64,14 +60,14 @@ public class GameLogic extends JFrame implements ActionListener{
         p1= new Player("p1", 0, 0, true);
         p2= new Player("p2", 0, 0, false);
 
-        OlympicRings= new ImageIcon(this.getClass().getResource("Card.png"));
-        Rings = new JLabel ("", OlympicRings, JLabel.CENTER);
         p1WinsL= new JLabel();
         p1WinsTF= new JLabel();
         p2WinsL= new JLabel();
         p2WinsTF= new JLabel();
         SpaceTF= new JLabel();
 
+        OlympicRings= new ImageIcon(this.getClass().getResource("Card.png"));
+        Rings = new JLabel ("", OlympicRings, JLabel.CENTER);
 
         //TITLE PANEL
         Title= new JLabel("Olympic Memory Game");
@@ -123,7 +119,6 @@ public class GameLogic extends JFrame implements ActionListener{
                 TwentyButtonListener(e);
             }
         });
-
         ButtonP = new JPanel();
         ButtonP.setPreferredSize(new Dimension(500, 50));
         ButtonP.setBackground(Color.white);
@@ -165,12 +160,15 @@ public class GameLogic extends JFrame implements ActionListener{
         ContainerP.removeAll();
         ContainerP.setSize(new Dimension(700, 700));
         ContainerP.setBackground(Color.white);
-        TitleP.setBackground(Color.white);
+
+        //RESET TITLE PANEL FEATURES
         Title.setForeground(Color.black);
         Title.setFont(Title.getFont().deriveFont(40f));
-        TitleP.setPreferredSize(new Dimension(700, 80));
         Title.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        TitleP.setPreferredSize(new Dimension(700, 80));
         TitleP.add(Title);
+        TitleP.setBackground(Color.white);
 
         //GRID PANEL
         GridP.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -179,32 +177,20 @@ public class GameLogic extends JFrame implements ActionListener{
         PlaceCards();
 
         //WINS PANEL
-
         p1WinsL.setText("Player 1 Wins:");
         p1WinsL.setForeground(Color.white);
         p1WinsL.setFont(p1WinsL.getFont().deriveFont(16f));
+
         SpaceTF.setText("       ");
+
         p1WinsTF.setText("0");
         p1WinsTF.setFont(p1WinsTF.getFont().deriveFont(16f));
         p1WinsTF.setForeground(Color.white);
 
-        p1MovesL.setText("Player 1 Moves:");
-        p1MovesL.setFont(p1MovesL.getFont().deriveFont(16f));
-        p1MovesL.setForeground(Color.white);
-        p1MovesTF.setText("0");
-        p1MovesTF.setFont(p1MovesTF.getFont().deriveFont(16f));
-        p1MovesTF.setForeground(Color.white);
-        p2MovesL.setText("Player 2 Moves:");
-        p2MovesL.setFont(p2MovesL.getFont().deriveFont(16f));
-        p2MovesL.setForeground(Color.white);
-        p2MovesTF.setText("0");
-        p2MovesTF.setFont(p2MovesTF.getFont().deriveFont(16f));
-        p2MovesTF.setForeground(Color.white);
-
-
         p2WinsL.setText("Player 2 Wins:");
         p2WinsL.setForeground(Color.white);
         p2WinsL.setFont(p2WinsL.getFont().deriveFont(16f));
+
         p2WinsTF.setText("0");
         p2WinsTF.setFont(p2WinsTF.getFont().deriveFont(16f));
         p2WinsTF.setForeground(Color.white);
@@ -219,6 +205,22 @@ public class GameLogic extends JFrame implements ActionListener{
         WinsP.add(p2WinsTF);
 
         //MOVES PANEL
+        p1MovesL.setText("Player 1 Moves:");
+        p1MovesL.setFont(p1MovesL.getFont().deriveFont(16f));
+        p1MovesL.setForeground(Color.white);
+
+        p1MovesTF.setText("0");
+        p1MovesTF.setFont(p1MovesTF.getFont().deriveFont(16f));
+        p1MovesTF.setForeground(Color.white);
+
+        p2MovesL.setText("Player 2 Moves:");
+        p2MovesL.setFont(p2MovesL.getFont().deriveFont(16f));
+        p2MovesL.setForeground(Color.white);
+
+        p2MovesTF.setText("0");
+        p2MovesTF.setFont(p2MovesTF.getFont().deriveFont(16f));
+        p2MovesTF.setForeground(Color.white);
+
         MovesP.setBackground(Color.darkGray);
         MovesP.setPreferredSize(new Dimension(600, 40));
         MovesP.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -232,13 +234,17 @@ public class GameLogic extends JFrame implements ActionListener{
         Player1L.setText("Player 1:");
         Player1L.setForeground(Color.blue);
         Player1L.setFont(Player1L.getFont().deriveFont(24f));
+
         Player1TF.setText("0");
         Player1TF.setFont(Player1TF.getFont().deriveFont(20f));
+
         Player2L.setText("Player 2:");
         Player2L.setForeground(Color.RED);
         Player2L.setFont(Player2L.getFont().deriveFont(20f));
+
         Player2TF.setText("0");
         Player2TF.setFont(Player2TF.getFont().deriveFont(20f));
+
         ScoreP.setLayout(new FlowLayout(FlowLayout.CENTER));
         ScoreP.setBackground(Color.WHITE);
         ScoreP.setPreferredSize(new Dimension(600, 50));
@@ -247,6 +253,7 @@ public class GameLogic extends JFrame implements ActionListener{
         ScoreP.add(Player2L);
         ScoreP.add(Player2TF);
 
+        //CONTAINER PANEL
         ContainerP.add(TitleP);
         ContainerP.add(WinsP);
         ContainerP.add(GridP);
@@ -257,7 +264,6 @@ public class GameLogic extends JFrame implements ActionListener{
         ContainerP.update(this.getGraphics());
         ContainerP.revalidate();
         ContainerP.repaint();
-
     }
 
     void ResetFunc(){
@@ -270,9 +276,10 @@ public class GameLogic extends JFrame implements ActionListener{
     void PlaceCards(){
         ArrayList<picNum> picArr= new ArrayList<picNum>();
         int count=0;
+
         picArr.add(picNum.values()[2]);
         picArr.add(picNum.values()[3]);
-        for(int l=4; l<(GridC*GridR)/2+3; l++){
+        for(int l=4; l<(GridC*GridR)/2+5; l++){
             picArr.add(picNum.values()[l]);
             picArr.add(picNum.values()[l]);
         }
@@ -282,7 +289,6 @@ public class GameLogic extends JFrame implements ActionListener{
             for(int j=0; j<GridC; j++){
                 panelHolder[i][j].setSport(picArr.get(count));
                 count++;
-
             }
         }
     }
@@ -330,12 +336,14 @@ public class GameLogic extends JFrame implements ActionListener{
 
     }
     void CheckMatch(Images obj){
-
         increaseMovesFunc();
+        //LOOP THROUGH THE BOARD
         for(int i=0; i<GridR; i++){
             for(int j=0; j<GridC; j++){
-                if(panelHolder[i][j].getCurrentPic()!=picNum.card && panelHolder[i][j].getCurrentPic()!=picNum.done){//NOT FLIPPED YET
-                    if(panelHolder[i][j].getCurrentPic()==picNum.goldMetal||obj.getCurrentPic()==picNum.goldMetal){//GOLD METAL CARD
+                //NOT FLIPPED YET
+                if(panelHolder[i][j].getCurrentPic()!=picNum.card && panelHolder[i][j].getCurrentPic()!=picNum.done){
+                    //GOLD METAL CARD
+                    if(panelHolder[i][j].getCurrentPic()==picNum.goldMetal||obj.getCurrentPic()==picNum.goldMetal){
                         WinGif();
                         if(JOptionPane.showConfirmDialog(this, "Would you like to play again?")==JOptionPane.OK_OPTION){
                             increaseWinsFunc();
@@ -348,6 +356,7 @@ public class GameLogic extends JFrame implements ActionListener{
                             System.exit(0);
                         }
                     }
+                    //FAILURE CARD
                     else if(panelHolder[i][j].getCurrentPic()==picNum.Fail|| obj.getCurrentPic()==picNum.Fail){
                          failGif();
                          increaseOtherPlayerWins();
@@ -356,23 +365,25 @@ public class GameLogic extends JFrame implements ActionListener{
                             ResetFunc();
                             resetWins();
                         }
+                    //NOT CHECKING AGAINST ITSELF
                     else if(obj!=panelHolder[i][j]){
+                        //GOT A MATCH
                         if(obj.getCurrentPic()==panelHolder[i][j].getCurrentPic()){
                             if(matchCount>0){
-                                JOptionPane.showMessageDialog(this, "You got another match. You get a bonus point and another turn");
+                                AnotherMatchGif();
                                 matchCount++;
                                 bonusPoint();
                                 if((panelHolder[i][j].PointValue==3)){
-                                    JOptionPane.showMessageDialog(this, "Congrats, another match! This one is worth three points and you get a bonus point.");
+                                    ThreePointMatchGif();
                                     matchCount++;
                                 }
                             }
                             else if(panelHolder[i][j].PointValue==3){
-                                JOptionPane.showMessageDialog(this, "You got a match that is worth 3 points. Congrats!");
+                                ThreePointMatchGif();
                                 matchCount++;
                             }
                             else if(matchCount<1){
-                                MatchGif();//JOptionPane.showMessageDialog(this,"You got a match! It is your turn again.");
+                                MatchGif();
                                 matchCount++;
                             }
 
@@ -380,12 +391,12 @@ public class GameLogic extends JFrame implements ActionListener{
                             WinCheck();
                         }
                         else{
-
-                            //JOptionPane.showMessageDialog(null, "Other player's turn...","Not A Match", JOptionPane.OK_OPTION, OlympicRings);//gif
                             JOptionPane.showMessageDialog(this, "Not a match. Other player's turn...");
                             matchCount=0;
+
                             obj.setCurrentPic(picNum.card);
                             panelHolder[i][j].setCurrentPic(picNum.card);
+
                             p1.switchTurns(p2);
                             if(p1.Turn){
                                 Player1L.setFont(Player1L.getFont().deriveFont(24f));
@@ -422,6 +433,7 @@ public class GameLogic extends JFrame implements ActionListener{
     public void cardValue(){
         boss = new ImageBoss();
         panelHolder=new Images[GridR][GridC];
+
         for(int i=0; i<(GridR); i++){
             for(int j=0; j<(GridC); j++){
                 if (j==2){
@@ -433,6 +445,7 @@ public class GameLogic extends JFrame implements ActionListener{
                 GridP.add(panelHolder[i][j]);
             }
         }
+
         GameSetup();
         update(this.getGraphics());
     }
@@ -613,6 +626,58 @@ public class GameLogic extends JFrame implements ActionListener{
             final ImageIcon icon = new ImageIcon(new URL("http://pixel.nymag.com/imgs/daily/intelligencer/2014/02/15/Olympics%202/celebration.o.jpg/a_560x375.jpg"));
             JOptionPane.showMessageDialog(null, "You got a match! Its your turn again.", "Congrats!!!", JOptionPane.INFORMATION_MESSAGE, icon);
             image = new URL ("http://pixel.nymag.com/imgs/daily/intelligencer/2014/02/15/Olympics%202/celebration.o.jpg/a_560x375.jpg");
+
+            URLConnection connect = new URLConnection(image) {
+                @Override
+                public void connect() throws IOException {
+
+                }
+            };
+            try{
+                InputStream in = connect.getInputStream();
+
+            }
+            catch(IOException e){
+                e.getLocalizedMessage();
+            }
+
+        }
+        catch (MalformedURLException e){
+            e.printStackTrace();
+        }
+    }
+    void ThreePointMatchGif(){
+        URL image;
+        try{
+            final ImageIcon icon = new ImageIcon(new URL("http://pixel.nymag.com/imgs/daily/intelligencer/2014/02/15/Olympics%202/celebration.o.jpg/a_560x375.jpg"));
+            JOptionPane.showMessageDialog(null, "You got a match worth 3 points! Its your turn again.", "Congrats!!!", JOptionPane.INFORMATION_MESSAGE, icon);
+            image = new URL ("http://pixel.nymag.com/imgs/daily/intelligencer/2014/02/15/Olympics%202/celebration.o.jpg/a_560x375.jpg");
+
+            URLConnection connect = new URLConnection(image) {
+                @Override
+                public void connect() throws IOException {
+
+                }
+            };
+            try{
+                InputStream in = connect.getInputStream();
+
+            }
+            catch(IOException e){
+                e.getLocalizedMessage();
+            }
+
+        }
+        catch (MalformedURLException e){
+            e.printStackTrace();
+        }
+    }
+    void AnotherMatchGif(){
+        URL image;
+        try{
+            final ImageIcon icon = new ImageIcon(new URL("http://24.media.tumblr.com/tumblr_lz0isdhwDL1qk915bo1_400.gif"));
+            JOptionPane.showMessageDialog(null, "You got another match! Its your turn again.", "Congrats!!!", JOptionPane.INFORMATION_MESSAGE, icon);
+            image = new URL ("http://24.media.tumblr.com/tumblr_lz0isdhwDL1qk915bo1_400.gif");
 
             URLConnection connect = new URLConnection(image) {
                 @Override
