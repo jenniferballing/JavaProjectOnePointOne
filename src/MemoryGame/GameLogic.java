@@ -718,7 +718,7 @@ public class GameLogic extends JFrame implements ActionListener{
                 InputStream in = connect.getInputStream();
 
             }
-            catch(IOException e){
+            catch(Exception e){
                 e.getLocalizedMessage();
             }
 
@@ -744,12 +744,12 @@ public class GameLogic extends JFrame implements ActionListener{
                 InputStream in = connect.getInputStream();
 
             }
-            catch(IOException e){
+            catch(Exception e){
                 e.getLocalizedMessage();
             }
 
         }
-        catch (MalformedURLException e){
+        catch (Exception e){
             e.printStackTrace();
         }
     }
@@ -758,7 +758,7 @@ public class GameLogic extends JFrame implements ActionListener{
         try{
             final ImageIcon icon = new ImageIcon(new URL("http://pixel.nymag.com/imgs/daily/intelligencer/2014/02/15/Olympics%202/expression.o.jpg/a_560x375.jpg"));
             JOptionPane.showMessageDialog(null, "Not a match.\nOther Player's turn.", "Oops...", JOptionPane.INFORMATION_MESSAGE, icon);
-            image = new URL ("");
+            image = new URL ("http://pixel.nymag.com/imgs/daily/intelligencer/2014/02/15/Olympics%202/expression.o.jpg/a_560x375.jpg");
 
             URLConnection connect = new URLConnection(image) {
                 @Override
@@ -770,12 +770,12 @@ public class GameLogic extends JFrame implements ActionListener{
                 InputStream in = connect.getInputStream();
 
             }
-            catch(IOException e){
+            catch(Exception e){
                 e.getLocalizedMessage();
             }
 
         }
-        catch (MalformedURLException e){
+        catch (Exception e){
             e.printStackTrace();
         }
     }
